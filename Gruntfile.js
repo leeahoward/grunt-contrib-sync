@@ -1,5 +1,5 @@
 /*
- * grunt-contrib-copy
+ * grunt-contrib-sync
  * http://gruntjs.com/
  *
  * Copyright (c) 2013 Chris Talkington, contributors
@@ -11,7 +11,7 @@ module.exports = function(grunt) {
 
   // Make an empty dir for testing as git doesn't track empty folders.
   grunt.file.mkdir('test/fixtures/empty_folder');
-  grunt.file.mkdir('test/expected/copy_test_mix/empty_folder');
+  grunt.file.mkdir('test/expected/sync_test_mix/empty_folder');
 
   // Project configuration.
   grunt.initConfig({
@@ -32,24 +32,24 @@ module.exports = function(grunt) {
     },
 
     test_vars: {
-      name: 'grunt-contrib-copy',
+      name: 'grunt-contrib-sync',
       version: '0.1.0',
       match: 'folder_one/*'
     },
 
     // Configuration to be run (and then tested).
-    copy: {
+    sync: {
       main: {
         files: [
-          {expand: true, cwd: 'test/fixtures', src: ['*.*'], dest: 'tmp/copy_test_files/'},
-          {expand: true, cwd: 'test/fixtures', src: ['**'], dest: 'tmp/copy_test_mix/'},
-          {expand: true, cwd: 'test/fixtures', src: ['<%= test_vars.match %>'], dest: 'tmp/copy_test_v<%= test_vars.version %>/'}
+          {expand: true, cwd: 'test/fixtures', src: ['*.*'], dest: 'tmp/sync_test_files/'},
+          {expand: true, cwd: 'test/fixtures', src: ['**'], dest: 'tmp/sync_test_mix/'},
+          {expand: true, cwd: 'test/fixtures', src: ['<%= test_vars.match %>'], dest: 'tmp/sync_test_v<%= test_vars.version %>/'}
         ]
       },
 
       flatten: {
         files: [
-          {expand: true, flatten: true, filter: 'isFile', src: ['test/fixtures/**'], dest: 'tmp/copy_test_flatten/'}
+          {expand: true, flatten: true, filter: 'isFile', src: ['test/fixtures/**'], dest: 'tmp/sync_test_flatten/'}
         ]
       },
 
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
 
       verbose: {
         files: [
-          {expand: true, src: ['test/fixtures/**'], dest: 'tmp/copy_test_verbose/'}
+          {expand: true, src: ['test/fixtures/**'], dest: 'tmp/sync_test_verbose/'}
         ]
       },
 
@@ -91,7 +91,7 @@ module.exports = function(grunt) {
 
   // Whenever the "test" task is run, first clean the "tmp" dir, then run this
   // plugin's task(s), then test the result.
-  grunt.registerTask('test', ['clean', 'copy', 'nodeunit']);
+  grunt.registerTask('test', ['clean', 'sync', 'nodeunit']);
 
   // By default, lint and run all tests.
   grunt.registerTask('default', ['jshint', 'test', 'build-contrib']);

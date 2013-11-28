@@ -1,10 +1,10 @@
 /*
- * grunt-contrib-copy
+ * grunt-contrib-sync
  * http://gruntjs.com/
  *
  * Copyright (c) 2013 Chris Talkington, contributors
  * Licensed under the MIT license.
- * https://github.com/gruntjs/grunt-contrib-copy/blob/master/LICENSE-MIT
+ * https://github.com/gruntjs/grunt-contrib-sync/blob/master/LICENSE-MIT
  */
 
 module.exports = function(grunt) {
@@ -13,7 +13,7 @@ module.exports = function(grunt) {
   var path = require('path');
   var fs = require('fs');
 
-  grunt.registerMultiTask('copy', 'Copy files.', function() {
+  grunt.registerMultiTask('sync', 'Sync files.', function() {
     var kindOf = grunt.util.kindOf;
 
     var options = this.options({
@@ -24,7 +24,7 @@ module.exports = function(grunt) {
       mode: false
     });
 
-    var copyOptions = {
+    var syncOptions = {
       encoding: options.encoding,
       process: options.process || options.processContent,
       noProcess: options.noProcess || options.processContentExclude,
@@ -54,8 +54,8 @@ module.exports = function(grunt) {
           grunt.file.mkdir(dest);
           tally.dirs++;
         } else {
-          grunt.verbose.writeln('Copying ' + src.cyan + ' -> ' + dest.cyan);
-          grunt.file.copy(src, dest, copyOptions);
+          grunt.verbose.writeln('Syncing ' + src.cyan + ' -> ' + dest.cyan);
+          grunt.file.sync(src, dest, syncOptions);
           if (options.mode !== false) {
             fs.chmodSync(dest, (options.mode === true) ? fs.lstatSync(src).mode : options.mode);
           }
